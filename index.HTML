@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voltify</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2300BCD4' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-6h-2v6zm0-8h2V7h-2v2z'/%3E%3C/svg%3E"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-primary: #00bcd4;
+        --color-secondary: #ffb300;
+        --color-dark-bg: #263238;
+
+        --color-header-bg: #111827;
+        --color-header-text: #ecf0f1;
+        --color-header-hover: #ffffff;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f9fa;
+        scroll-behavior: smooth;
+      }
+
+      #navbar {
+        background-color: var(--color-header-bg);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .header-sticky {
+        backdrop-filter: blur(10px);
+        background-color: rgba(44, 62, 80, 0.95);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .text-gradient {
+        background-image: linear-gradient(
+          135deg,
+          var(--color-primary),
+          var(--color-secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .plan-card-content {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+      }
+
+      .plan-card-features {
+        flex-grow: 1;
+      }
+
+      .price-bubble {
+        background-color: var(--color-primary);
+        color: white;
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+
+      .logo-image {
+        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.4));
+      }
+
+      .hidden-header {
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      #navbar nav a {
+        color: var(--color-header-text);
+      }
+
+      #navbar nav a:hover {
+        color: var(--color-header-hover);
+      }
+
+      #navbar #menu-button {
+        color: var(--color-header-text);
+      }
+
+      #navbar #menu-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .history-image-container {
+        padding: 0;
+        background: none;
+        height: auto;
+      }
+      
+      .history-image-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body class="text-gray-800">
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50">
+      <div
+        class="container mx-auto px-6 py-4 flex justify-between items-center"
+      >
+        <!-- Logo -->
+        <a href="#inicio" class="flex items-center">
+          <img
+            src="./images/Logo_-_Voltify.png"
+            alt="Logo Voltify - Soluções em Energia"
+            class="logo-image h-20 md:h-15 w-auto transition duration-300"
+          />
+        </a>
+
+        <!-- Navegação Desktop -->
+        <nav class="hidden md:flex space-x-8 text-lg font-medium">
+          <a
+            href="#inicio"
+            class="text-gray-600 hover:text-blue-500 transition duration-150"
+            >Início</a
+          >
+          <a
+            href="#historia"
+            class="text-gray-600 hover:text-blue-500 transition duration-150"
+            >Nossa História</a
+          >
+          <a
+            href="#planos"
+            class="text-gray-600 hover:text-blue-500 transition duration-150"
+            >Planos</a
+          >
+          <a
+            href="#contato"
+            class="text-gray-600 hover:text-blue-500 transition duration-150"
+            >Contato</a
+          >
+        </nav>
+        
+        <button
+          id="menu-button"
+          class="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Mobile Menu (oculto por padrão) -->
+    <div
+      id="mobile-menu"
+      class="fixed inset-0 bg-white z-40 hidden md:hidden pt-20"
+    >
+      <nav
+        class="flex flex-col items-center space-y-6 text-2xl font-semibold p-8"
+      >
+        <a
+          href="#inicio"
+          class="text-gray-800 hover:text-blue-500 transition duration-150"
+          onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+          >Início</a
+        >
+        <a
+          href="#historia"
+          class="text-gray-800 hover:text-blue-500 transition duration-150"
+          onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+          >Nossa História</a
+        >
+        <a
+          href="#planos"
+          class="text-gray-800 hover:text-blue-500 transition duration-150"
+          onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+          >Planos</a
+        >
+        <a
+          href="#contato"
+          class="text-gray-800 hover:text-blue-500 transition duration-150"
+          onclick="document.getElementById('mobile-menu').classList.add('hidden')"
+          >Contato</a
+        >
+      </nav>
+    </div>
+
+    <main>
+      <!-- 2. Seção Hero (Início) -->
+      <section
+        id="inicio"
+        class="pt-32 pb-24 bg-white min-h-screen flex items-center"
+      >
+        <div class="container mx-auto px-6 text-center">
+          <p
+            class="text-lg font-semibold uppercase mb-4"
+            style="color: var(--color-secondary)"
+          >
+            O Futuro da Conectividade e Energia
+          </p>
+          <h1 class="text-5xl md:text-7xl font-extrabold leading-tight mb-6">
+            Potencialize seu Negócio com a
+            <span class="text-gradient">Voltify Inteligente</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-500 max-w-3xl mx-auto mb-10">
+            Soluções de infraestrutura digital e energia que redefinem a
+            eficiência, segurança e sustentabilidade para empresas de todos os
+            portes.
+          </p>
+          <div class="flex justify-center space-x-4">
+            <a
+              href="#planos"
+              class="text-white text-lg font-bold py-3 px-8 rounded-xl shadow-lg transform hover:scale-105 transition duration-300"
+              style="background-color: var(--color-primary)"
+            >
+              Ver Planos
+            </a>
+            <a
+              href="#contato"
+              class="bg-white border text-lg font-bold py-3 px-8 rounded-xl shadow-md transform hover:bg-gray-50 transition duration-300"
+              style="
+                color: var(--color-primary);
+                border-color: var(--color-primary);
+              "
+            >
+              Fale Conosco
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Nossa História -->
+      <section id="historia" class="py-24 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+              Nossa <span class="text-gradient">História</span> e Missão
+            </h2>
+            <p class="text-xl text-gray-500">
+              Transformando o presente para construir um futuro mais eficiente.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Coluna da Imagem/Gráfico -->
+            <div class="rounded-2xl overflow-hidden shadow-2xl history-image-container">
+              <div>
+                <img 
+                    src="./images/content.png" 
+                    alt="Gráfico de cérebro digital com raio e circuito representando IA e Energia" 
+                    class="w-full h-auto object-cover"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Coluna do Texto -->
+            <div>
+              <h3 class="text-3xl font-bold mb-6">A Jornada da Inovação</h3>
+              <p class="text-lg text-gray-600 mb-6">
+                A Voltify nasceu em 2025 com a visão de desmistificar a
+                complexidade da infraestrutura de TI e da gestão energética.
+                Nossos fundadores, um grupo de engenheiros e desenvolvedores
+                visionários, perceberam a necessidade de uma solução única que
+                integrasse ambos os mundos.
+              </p>
+              <p class="text-lg text-gray-600 mb-8">
+                Hoje, somos líderes em oferecer plataformas que não apenas
+                otimizam o consumo de energia e a segurança dos dados, mas que
+                também utilizam Inteligência Artificial para prever e prevenir
+                falhas, garantindo 99.99% de disponibilidade para nossos
+                clientes.
+              </p>
+              <ul class="space-y-3 text-lg font-medium text-gray-700">
+                <li class="flex items-center">
+                  <span class="mr-3" style="color: var(--color-primary)"
+                    >✔</span
+                  >
+                  Missão: Entregar eficiência energética e infraestrutura de
+                  dados de forma sustentável.
+                </li>
+                <li class="flex items-center">
+                  <span class="mr-3" style="color: var(--color-primary)"
+                    >✔</span
+                  >
+                  Visão: Ser a plataforma global de referência para gestão
+                  inteligente de recursos corporativos.
+                </li>
+                <li class="flex items-center">
+                  <span class="mr-3" style="color: var(--color-primary)"
+                    >✔</span
+                  >
+                  Valores: Inovação, Sustentabilidade e Confiança.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Planos e Preços - Alinhamento e Cores Atualizadas -->
+      <section id="planos" class="py-24 md:py-32 bg-white">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+              Escolha o seu <span class="text-gradient">Plano</span> Ideal
+            </h2>
+            <p class="text-xl text-gray-500">
+              Soluções flexíveis desenhadas para crescer junto com seu negócio.
+            </p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            <div
+              class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 transform hover:shadow-2xl hover:scale-[1.02] transition duration-300"
+            >
+              <div class="plan-card-content">
+                <h3 class="text-2xl font-bold mb-3 text-gray-900">
+                  Plano Essencial
+                </h3>
+                <p class="text-gray-500 mb-6">
+                  Ideal para pequenos negócios e startups.
+                </p>
+
+                <!-- Bloco de Preço -->
+                <div class="mb-8">
+                  <span
+                    class="text-5xl font-extrabold"
+                    style="color: var(--color-primary)"
+                    >R$ 99</span
+                  >
+                  <span class="text-xl font-medium text-gray-500">/mês</span>
+                </div>
+
+                <!-- Lista de Recursos -->
+                <ul class="space-y-4 text-gray-600 plan-card-features">
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >⚡</span
+                    >
+                    Monitoramento de 10 Dispositivos
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >⚡</span
+                    >
+                    Relatórios Mensais de Consumo
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >⚡</span
+                    >
+                    Suporte via Chat (Horário Comercial)
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >⚡</span
+                    >
+                    Dashboard Básico
+                  </li>
+                  <li class="flex items-center text-gray-400">
+                    <span class="text-gray-400 mr-3">❌</span> Prevenção
+                    Preditiva (AI)
+                  </li>
+                  <li class="flex items-center text-gray-400">
+                    <span class="text-gray-400 mr-3">❌</span> Integração API
+                    Completa
+                  </li>
+                </ul>
+
+                <!-- Botão no final do card -->
+                <button
+                  class="w-full mt-10 text-white font-bold py-3 rounded-xl transition duration-300 shadow-md"
+                  style="background-color: var(--color-primary)"
+                  data-plan="Essencial"
+                >
+                  Começar Agora
+                </button>
+              </div>
+            </div>
+
+            <!-- Plano 2: PROFISSIONAL (Destaque) -->
+            <div
+              class="p-10 rounded-2xl shadow-2xl border-4 transform scale-[1.05] hover:scale-[1.07] transition duration-300"
+              style="
+                background-color: var(--color-dark-bg);
+                border-color: var(--color-secondary);
+              "
+            >
+              <div class="plan-card-content">
+                <span
+                  class="inline-block text-white text-sm font-semibold px-3 py-1 rounded-full mb-3 uppercase"
+                  style="background-color: var(--color-secondary)"
+                  >Mais Popular</span
+                >
+                <h3 class="text-3xl font-bold mb-3 text-white">
+                  Plano Profissional
+                </h3>
+                <p class="text-gray-300 mb-6">
+                  Para empresas em crescimento que buscam eficiência máxima.
+                </p>
+
+                <!-- Bloco de Preço -->
+                <div class="mb-8">
+                  <span
+                    class="text-6xl font-extrabold"
+                    style="color: var(--color-secondary)"
+                    >R$ 249</span
+                  >
+                  <span class="text-xl font-medium text-gray-400">/mês</span>
+                </div>
+
+                <!-- Lista de Recursos -->
+                <ul class="space-y-4 text-gray-200 plan-card-features">
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-secondary)"
+                      >✅</span
+                    >
+                    Monitoramento de 50 Dispositivos
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-secondary)"
+                      >✅</span
+                    >
+                    Relatórios Detalhados e Históricos
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-secondary)"
+                      >✅</span
+                    >
+                    Suporte Prioritário 24/7
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-secondary)"
+                      >✅</span
+                    >
+                    Dashboard Completo e Personalizável
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-secondary)"
+                      >✅</span
+                    >
+                    **Prevenção Preditiva (AI)**
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-secondary)"
+                      >✅</span
+                    >
+                    Integração API Básica
+                  </li>
+                </ul>
+
+                <!-- Botão no final do card -->
+                <button
+                  class="w-full mt-10 text-white font-bold py-4 rounded-xl transition duration-300 shadow-lg"
+                  style="background-color: var(--color-secondary)"
+                  data-plan="Profissional"
+                >
+                  Assinar Agora
+                </button>
+              </div>
+            </div>
+
+            <!-- Plano 3: EMPRESARIAL -->
+            <div
+              class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200 transform hover:shadow-2xl hover:scale-[1.02] transition duration-300"
+            >
+              <div class="plan-card-content">
+                <h3 class="text-2xl font-bold mb-3 text-gray-900">
+                  Plano Empresarial
+                </h3>
+                <p class="text-gray-500 mb-6">
+                  A solução mais robusta para grandes corporações.
+                </p>
+
+                <!-- Bloco de Preço -->
+                <div class="mb-8">
+                  <span
+                    class="text-5xl font-extrabold"
+                    style="color: var(--color-primary)"
+                    >Sob Consulta</span
+                  >
+                </div>
+
+                <!-- Lista de Recursos -->
+                <ul class="space-y-4 text-gray-600 plan-card-features">
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >👑</span
+                    >
+                    Monitoramento Ilimitado
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >👑</span
+                    >
+                    Relatórios Personalizados e *Compliance*
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >👑</span
+                    >
+                    Gerente de Conta Dedicado
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >👑</span
+                    >
+                    Dashboard Completo e Personalizável
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >👑</span
+                    >
+                    Prevenção Preditiva (AI) Avançada
+                  </li>
+                  <li class="flex items-center">
+                    <span class="mr-3" style="color: var(--color-primary)"
+                      >👑</span
+                    >
+                    **Integração API Completa**
+                  </li>
+                </ul>
+
+                <!-- Botão no final do card -->
+                <button
+                  class="w-full mt-10 bg-gray-200 hover:bg-gray-300 font-bold py-3 rounded-xl transition duration-300 shadow-md"
+                  style="color: var(--color-primary)"
+                  data-plan="Empresarial"
+                >
+                  Fale com Vendas
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Formulário de Contato -->
+      <section id="contato" class="py-24 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-2xl">
+          <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-4">
+              Entre em <span class="text-gradient">Contato</span>
+            </h2>
+            <p class="text-lg text-gray-500">
+              Preencha o formulário e um especialista da Voltify entrará em
+              contato.
+            </p>
+          </div>
+
+          <form
+            id="contact-form"
+            class="bg-white p-8 rounded-2xl shadow-xl border border-gray-200"
+          >
+            <div class="mb-6">
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >Nome Completo</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+              />
+            </div>
+            <div class="mb-6">
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >Email Profissional</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+              />
+            </div>
+            <div class="mb-6">
+              <label
+                for="message"
+                class="block text-sm font-medium text-gray-700 mb-2"
+                >Mensagem (Opcional)</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full text-white font-bold py-3 rounded-xl shadow-lg transform hover:scale-[1.01] transition duration-300"
+              style="background-color: var(--color-primary)"
+            >
+              Enviar Mensagem
+            </button>
+
+            <!-- Feedback de Envio -->
+            <p
+              id="form-message"
+              class="mt-4 text-center hidden font-medium"
+            ></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+      <div class="container mx-auto px-6 text-center md:text-left">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Coluna 1: Logo e Descrição -->
+          <div>
+            <h4
+              class="text-2xl font-extrabold mb-4"
+              style="color: var(--color-primary)"
+            >
+              Voltify
+            </h4>
+            <p class="text-gray-400 text-sm">
+              Liderando a transformação digital com soluções de energia
+              inteligente e infraestrutura de TI de ponta.
+            </p>
+          </div>
+
+          <!-- Coluna 2: Links Rápidos -->
+          <div>
+            <h5
+              class="text-lg font-semibold mb-4"
+              style="color: var(--color-primary)"
+            >
+              Navegação
+            </h5>
+            <ul class="space-y-2 text-gray-400 text-sm">
+              <li>
+                <a
+                  href="#historia"
+                  class="hover:text-white transition duration-150"
+                  >Nossa História</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#planos"
+                  class="hover:text-white transition duration-150"
+                  >Planos de Assinatura</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#contato"
+                  class="hover:text-white transition duration-150"
+                  >Fale Conosco</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition duration-150"
+                  >Termos de Serviço</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Coluna 3: Contato -->
+          <div>
+            <h5
+              class="text-lg font-semibold mb-4"
+              style="color: var(--color-primary)"
+            >
+              Detalhes
+            </h5>
+            <p class="text-gray-400 text-sm">
+              Endereço: Rua da Eletricidade, 123 - SP<br />
+              Email: suporte@voltify.com<br />
+              Telefone: (17) 99712-3456
+            </p>
+          </div>
+
+          <!-- Coluna 4: Social -->
+          <div>
+            <h5
+              class="text-lg font-semibold mb-4"
+              style="color: var(--color-primary)"
+            >
+              Redes Sociais
+            </h5>
+            <div class="flex space-x-4 md:justify-start justify-center">
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-500 transition duration-150"
+              >
+                <!-- Ícone de Linkedin -->
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.518-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.714 7 2.227v7.008z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-500 transition duration-150"
+              >
+                <!-- Ícone de Twitter/X -->
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.791-1.574 2.162-2.722-.951.564-2.005.974-3.127 1.195-.89-.955-2.173-1.554-3.595-1.554-2.71 0-4.91 2.203-4.91 4.91 0 .385.044.758.128 1.115-4.085-.205-7.71-2.15-10.136-5.111-.424.729-.668 1.578-.668 2.474 0 1.705.867 3.204 2.188 4.078-.802-.025-1.556-.245-2.212-.613v.062c0 2.385 1.7 4.375 3.946 4.825-.414.113-.85.17-1.295.17-.318 0-.626-.031-.924-.088 1.71 2.084 4.354 3.606 7.29 3.649-1.693 1.33-3.83 2.123-6.172 2.123-.404 0-.803-.024-1.195-.07 2.193 1.397 4.793 2.213 7.587 2.213 9.106 0 14.09-7.55 14.09-14.09 0-.214-.005-.426-.014-.637.974-.707 1.828-1.596 2.5-2.615z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                class="text-gray-400 hover:text-blue-500 transition duration-150"
+              >
+                <!-- Ícone de Facebook -->
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.21 0-4.192 1.503-4.192 4.615v2.385z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direitos Autorais -->
+        <div class="mt-8 pt-6 border-t border-gray-700 text-center">
+          <p class="text-sm text-gray-500">
+            &copy; 2025 Voltify. Todos os direitos reservados. Design por
+            Voltify.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Referências aos elementos do DOM
+        const navbar = document.getElementById("navbar");
+        const menuButton = document.getElementById("menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const contactForm = document.getElementById("contact-form");
+        const formMessage = document.getElementById("form-message");
+        const planButtons = document.querySelectorAll("[data-plan]");
+
+        // Variável para armazenar a última posição de rolagem
+        let lastScrollY = window.scrollY;
+
+        // 1. Função para controlar o Sticky Header e o Comportamento de Ocultar/Mostrar
+        const handleScroll = () => {
+          const currentScrollY = window.scrollY;
+
+          // Ativa o efeito "sticky" (fundo semi-transparente) assim que a rolagem começa
+          if (currentScrollY > 50) {
+            navbar.classList.add("header-sticky");
+          } else {
+            navbar.classList.remove("header-sticky");
+          }
+
+          // Lógica de Ocultar/Mostrar
+          // 1. Se a rolagem for menor que 100px (ainda no topo), sempre mostra o header
+          if (currentScrollY <= 100) {
+            navbar.classList.remove("hidden-header");
+          }
+          // 2. Se a rolagem for para baixo (oculta) E estiver fora do topo da página
+          else if (currentScrollY > lastScrollY) {
+            navbar.classList.add("hidden-header");
+          }
+          // 3. Se a rolagem for para cima (mostra)
+          else {
+            navbar.classList.remove("hidden-header");
+          }
+
+          // Atualiza a posição da última rolagem
+          lastScrollY = currentScrollY;
+        };
+
+        // Adiciona listener de scroll e executa no carregamento
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        // 2. Controle do Menu Mobile
+        menuButton.addEventListener("click", () => {
+          mobileMenu.classList.toggle("hidden");
+          // Oculta o header principal quando o menu mobile é aberto para evitar sobreposição
+          if (!mobileMenu.classList.contains("hidden")) {
+            navbar.classList.add("hidden-header");
+          } else {
+            // Tenta mostrar o header novamente ao fechar, dependendo da rolagem
+            handleScroll();
+          }
+        });
+
+        // Adiciona evento de clique para fechar o menu mobile ao selecionar um link
+        mobileMenu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+            // Garante que o header volte a ser gerenciado pelo scroll ao fechar o menu
+            handleScroll();
+          });
+        });
+
+        // 3. Simulação de Envio do Formulário de Contato
+        contactForm.addEventListener("submit", (event) => {
+          event.preventDefault(); // Impede o envio real do formulário
+
+          // Exibe mensagem de envio
+          formMessage.classList.remove(
+            "hidden",
+            "text-red-500",
+            "text-green-500"
+          );
+          formMessage.classList.add("text-gray-500");
+          formMessage.textContent = "Enviando...";
+
+          // Simula o processamento do envio com um timeout
+          setTimeout(() => {
+            formMessage.classList.remove("text-gray-500");
+            formMessage.style.color = "var(--color-primary)";
+            formMessage.textContent =
+              "Mensagem enviada com sucesso! Em breve entraremos em contato.";
+            contactForm.reset();
+          }, 2000);
+        });
+
+        // 4. Ação para Botões de Plano
+        planButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const planName = button.getAttribute("data-plan");
+            console.log(`Você selecionou o Plano ${planName}.`);
+
+            // Exibe uma notificação customizada (substituindo o alert)
+            const modalText = `Plano ${planName} Selecionado!\nVocê seria redirecionado para a página de pagamento/vendas.`;
+
+            formMessage.classList.remove("hidden", "text-green-500");
+            formMessage.style.color = "var(--color-secondary)";
+            formMessage.textContent = modalText;
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
